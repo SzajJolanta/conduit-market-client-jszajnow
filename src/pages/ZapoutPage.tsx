@@ -153,9 +153,7 @@ const ZapoutPage: React.FC = () => {
           {CurrentStep && <CurrentStep />}
 
           <p className="voice-sm text-muted-foreground mt-8 text-balance">
-            Your personal data will be used to process your order, support your
-            experience throughout this website, and for other purposes described
-            in our privacy policy.
+            {`Your data stays between you and the Merchant. Order details and shipping info are sent directly to them via NIP-17 Private Message. We don’t store it. We don’t see it.`}
           </p>
         </div>
 

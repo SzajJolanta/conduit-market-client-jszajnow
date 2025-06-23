@@ -36,10 +36,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const validationMemo = useMemo(() => {
     const validationResult = validateProductListing(event)
 
-    if (!validationResult.success) {
-      console.warn('Invalid product event:', validationResult.error)
-      return { valid: false, productEvent: null }
-    }
+    // if (!validationResult.success) {
+    //   console.warn('Invalid product event:', validationResult.error)
+    //   return { valid: false, productEvent: null }
+    // }
 
     // Now we can safely treat it as a ProductListing
     return {
@@ -95,7 +95,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const isOnSale = stock !== null && stock > 5 && visibility === 'on-sale'
   const isLowStock = stock !== null && stock <= 5 && stock > 0
   const discountPercent = 10 // mock value
-  const priceAmount = parseFloat(price.amount)
+  price && console.log('Price: ', price)
+  const priceAmount = price?.amount ? parseFloat(price.amount) : 0
   const priceInSats = formatPrice(priceAmount, 'SAT')
   const priceInUSD = formatPrice(priceAmount, 'USD')
   const discountedPriceInSats = formatPrice(

@@ -9,6 +9,7 @@ import useWindowState, {
   WindowTypes
 } from './stores/useWindowState.ts'
 import LoginWindow from './layouts/windows/LoginWindow.tsx'
+import NDKHeadless from './components/ndk.ts'
 
 const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
   children
@@ -73,7 +74,12 @@ const AppInitializer: React.FC<{ children: React.ReactNode }> = ({
     initialize()
   }, [isNdkReady, isLoggedIn, fetchUser, user])
 
-  return <>{children}</>
+  return (
+    <>
+      <NDKHeadless />
+      {children}
+    </>
+  )
 }
 
 export default AppInitializer

@@ -6,125 +6,23 @@ import PageSection from '@/layouts/PageSection'
 import CollectionCard from '@/components/Cards/CollectionCard'
 import StoreCard from '@/components/Cards/StoreCard'
 import ArticleCard from '@/components/Cards/ArticleCard'
-import { DualRankingTable } from '@/components/RankingTable'
 import Banner from '@/components/Banner'
 import type { NDKFilter } from '@nostr-dev-kit/ndk'
-import { useSubscription } from 'nostr-hooks'
-import Skeleton from '@/components/Skeleton'
 import { useEffect } from 'react'
+import { useSubscribe } from '@nostr-dev-kit/ndk-hooks'
 
 const HomePage: React.FC = () => {
   return (
     <>
-      <Hero />
+      {/* <Hero /> */}
 
       <CarouselSection
-        name="For You"
-        type={CardType.PromoCard}
-        variant="1item"
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      {/* <PageSection>
-        <h2 className="voice-3l">What's Hot</h2>
-        <DualRankingTable />
-      </PageSection> */}
-
-      <CarouselSection
-        name="Holiday discounts"
+        name="All Products"
         type={CardType.ProductCard}
-        variant="home"
-        visibleItems={6}
+        variant="card"
         filters={[
           {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Curated by the community"
-        type={CardType.CollectionCard}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Curated by the community"
-        type={CardType.CollectionCard}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Trending stores"
-        type={CardType.StoreCard}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Real Coffee Beans"
-        type={CardType.CollectionCard}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Handmade Goods"
-        type={CardType.ProductCard}
-        variant="home"
-        visibleItems={6}
-        visibleItemsMobile={2}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Tech Gadgets"
-        type={CardType.PromoCard}
-        variant="1item"
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
-          }
-        ]}
-      />
-
-      <CarouselSection
-        name="Nostr 101"
-        type={CardType.ArticleCard}
-        filters={[
-          {
-            kinds: [30402],
-            limit: 20
+            kinds: [30402]
           }
         ]}
       />
@@ -161,13 +59,16 @@ function CarouselSection({
   visibleItems = undefined,
   visibleItemsMobile = undefined
 }: CarouselSectionProps) {
-  const { events, isLoading, createSubscription } = useSubscription(
-    `${name.toLowerCase().replace(' ', '_')}-${crypto.randomUUID()}`
-  )
+  const { events } = useSubscribe(filters)
 
   useEffect(() => {
-    createSubscription({ filters })
-  }, [createSubscription])
+    console.log('>>> New events received: ')
+    console.log(events)
+  }, [events])
+
+  useEffect(() => {
+    console.log('Filters: ', filters)
+  }, [])
 
   return (
     <PageSection>
@@ -176,7 +77,6 @@ function CarouselSection({
         visibleItems={visibleItems}
         visibleItemsMobile={visibleItemsMobile}
       >
-        {isLoading && <Skeleton className="h-64 w-full" />}
         {events &&
           events.map((e, index) => {
             switch (type) {
@@ -205,7 +105,7 @@ function CarouselSection({
                 return <StoreCard key={index} event={e} />
             }
           })}
-        {!isLoading && !events && (
+        {!events && (
           <div className="animate-pulse">No events received from relays</div>
         )}
       </Carousel>
