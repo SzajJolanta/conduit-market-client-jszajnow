@@ -18,6 +18,8 @@ import Button from '@/components/Buttons/Button'
 import Icon from '@/components/Icon'
 import ZapoutConfirmation from '@/components/ZapoutPage/ZapoutConfirmation'
 import { useAutoAnimate } from '@formkit/auto-animate/react'
+import { useZapoutStore } from '@/stores/useZapoutStore'
+
 
 type ZapoutStep = {
   label: string
@@ -27,6 +29,19 @@ type ZapoutStep = {
 
 const ZapoutPage: React.FC = () => {
   const { merchantPubkey } = useParams()
+  const { getCart } = useCartStore()
+  const setCartItems = useZapoutStore((s) => s.setCartItems)
+
+  useEffect(() => {
+    if (merchantPubkey) {
+      const cart = getCart(merchantPubkey)
+      if (cart && cart.items.length > 0) {
+        setCartItems(cart.items) // ✅ Just the items go into Zustand
+      }
+    }
+  }, [merchantPubkey])
+
+
   const query = useSearch() // zapoutStep=shipping
   const step = query.split('=')[1] ?? 'shipping' // shipping
 

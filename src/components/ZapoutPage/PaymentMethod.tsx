@@ -12,6 +12,8 @@ import postOrder from '@/lib/nostr/postOrder'
 import { useCartStore } from '@/stores/useCartStore'
 import type { ShippingFormData } from './ShippingForm'
 
+import { useZapoutStore } from '@/stores/useZapoutStore'
+
 const PaymentMethod: React.FC = () => {
   const [location, navigate] = useLocation()
   const [isGeneratingInvoice, setIsGeneratingInvoice] = useState(false)
@@ -22,6 +24,11 @@ const PaymentMethod: React.FC = () => {
     () => merchantPubkey && getCart(merchantPubkey),
     [merchantPubkey]
   )
+
+  // ✅ Zustand integration + tab sync
+  const paymentMethod = useZapoutStore((s) => s.paymentMethod)
+  const setPaymentMethod = useZapoutStore((s) => s.setPaymentMethod)
+  const [selectedMethod, setSelectedMethod] = useState(paymentMethod ?? 'lightning')
 
   const paymentMethods = [
     {
@@ -104,13 +111,19 @@ const PaymentMethod: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     // when submitted, ie generate invoice, then the tabs content is shown
-
     navigate(`?zapoutStep=confirmation`)
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <Tabs className="mt-8" defaultValue="lightning">
+      <Tabs
+        className="mt-8"
+        value={selectedMethod}
+        onValueChange={(val) => {
+          setSelectedMethod(val)
+          setPaymentMethod(val)
+        }}
+      >
         <TabsList>
           {paymentMethods.map((method) => (
             <TabsTrigger
@@ -128,6 +141,7 @@ const PaymentMethod: React.FC = () => {
             </TabsTrigger>
           ))}
         </TabsList>
+
         {paymentMethods.map((method) => {
           if (isGenerated) {
             return (
