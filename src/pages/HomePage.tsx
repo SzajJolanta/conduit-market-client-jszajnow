@@ -22,7 +22,8 @@ const HomePage: React.FC = () => {
         variant="card"
         filters={[
           {
-            kinds: [30402]
+            kinds: [30402],
+            limit: 60
           }
         ]}
       />

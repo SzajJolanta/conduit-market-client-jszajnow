@@ -6,6 +6,7 @@ import { z } from 'zod'
 import Button from '../Buttons/Button'
 import Field from '../Form/Field'
 import { useLocation } from 'wouter'
+import { useZapoutStore } from '@/stores/useZapoutStore'
 
 // Form configuration object
 const formConfig = {
@@ -167,6 +168,7 @@ const DynamicField: React.FC<{
 
 const ShippingForm: React.FC = () => {
   const [location, navigate] = useLocation()
+  const { setShippingInfo } = useZapoutStore()
 
   const {
     control,
@@ -190,8 +192,8 @@ const ShippingForm: React.FC = () => {
 
   const onSubmit = async (data: ShippingFormData) => {
     try {
-      console.log('Form data:', data)
-      // If validation passes, proceed to payment
+      // TODO: Data sanitization and validation
+      setShippingInfo(data)
       navigate(`?zapoutStep=payment`)
     } catch (error) {
       console.error('Form submission error:', error)
