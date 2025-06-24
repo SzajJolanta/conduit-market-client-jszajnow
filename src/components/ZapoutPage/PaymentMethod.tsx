@@ -25,7 +25,6 @@ const PaymentMethod: React.FC = () => {
     [merchantPubkey]
   )
 
-  // ✅ Zustand integration + tab sync
   const paymentMethod = useZapoutStore((s) => s.paymentMethod)
   const setPaymentMethod = useZapoutStore((s) => s.setPaymentMethod)
   const [selectedMethod, setSelectedMethod] = useState(paymentMethod ?? 'lightning')

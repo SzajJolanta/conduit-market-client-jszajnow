@@ -36,14 +36,14 @@ const ZapoutPage: React.FC = () => {
     if (merchantPubkey) {
       const cart = getCart(merchantPubkey)
       if (cart && cart.items.length > 0) {
-        setCartItems(cart.items) // ✅ Just the items go into Zustand
+        setCartItems(cart.items)
       }
     }
   }, [merchantPubkey])
 
 
-  const query = useSearch() // zapoutStep=shipping
-  const step = query.split('=')[1] ?? 'shipping' // shipping
+  const query = useSearch()
+  const step = query.split('=')[1] ?? 'shipping'
 
   const [location, setLocation] = useLocation()
 

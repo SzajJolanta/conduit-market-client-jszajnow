@@ -10,7 +10,7 @@ import { useParams } from 'wouter'
 import { createOrder } from '@/lib/nostr/createOrder'
 import postOrder from '@/lib/nostr/postOrder'
 import { NDKEvent } from '@nostr-dev-kit/ndk'
-import { useLocation } from 'wouter' // ← Add at the top if not already
+import { useLocation } from 'wouter'
 
 
 const LoadingBar: React.FC<{
@@ -62,7 +62,6 @@ const ZapoutConfirmation: React.FC = () => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [isComplete, setIsComplete] = useState(false)
-  // Inside the component
   const [_, navigate] = useLocation()
 
   const { shippingInfo, paymentMethod, cartItems, notes } = useZapoutStore()
@@ -71,7 +70,7 @@ const ZapoutConfirmation: React.FC = () => {
 
   const { merchantPubkey } = useParams()
 
-  const TOTAL_DURATION = 8000 // 8 seconds
+  const TOTAL_DURATION = 8000
 
   const loadingSteps = [
     {
@@ -132,7 +131,6 @@ const ZapoutConfirmation: React.FC = () => {
         })),
         address: addressString,
         message: `Order from Pubkey: ${pubkey}`,
-        // Optionally: include paymentMethod or notes here
       }
 
       const order = await createOrder(orderData, merchantPubkey)
