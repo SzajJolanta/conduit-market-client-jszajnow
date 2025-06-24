@@ -141,7 +141,7 @@ const ZapoutConfirmation: React.FC = () => {
       }
 
       await postOrder(order, merchantPubkey)
-      console.log('✅ Order successfully posted.')
+      console.log('Order successfully posted.')
     } catch (error) {
       console.error('[ZapoutConfirmation] Order error:', error)
     }
