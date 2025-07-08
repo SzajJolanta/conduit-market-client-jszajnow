@@ -21,6 +21,7 @@ export interface ButtonProps {
   to?: string
   className?: string
   ref?: React.RefObject<HTMLButtonElement>
+  dataTestId?: string;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -33,7 +34,8 @@ const Button: React.FC<ButtonProps> = ({
   to = '',
   onClick,
   className,
-  ref
+  ref,
+  dataTestId
 }) => {
   const classNameValue = cn(
     // Base styles applied to all buttons
@@ -83,7 +85,7 @@ const Button: React.FC<ButtonProps> = ({
 
   if (isLink) {
     return (
-      <Link to={to} className={classNameValue}>
+      <Link to={to} className={classNameValue} data-test-id={dataTestId} >
         {children}
       </Link>
     )
@@ -100,6 +102,7 @@ const Button: React.FC<ButtonProps> = ({
       disabled={disabled}
       onClick={handleClick}
       ref={ref}
+      data-test-id={dataTestId}
     >
       {children}
     </button>

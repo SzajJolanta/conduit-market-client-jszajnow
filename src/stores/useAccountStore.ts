@@ -53,7 +53,20 @@ export const useAccountStore = create<AccountState>()(
       login: async () => {
         try {
           const ndk = await getNdk()
-          const user = await ndk.signer?.user()
+          await ndk.connect()
+
+          const isTest = import.meta.env.MODE === 'test' || process.env.NODE_ENV === 'test'
+          const testPrivkey = import.meta.env.VITE_TEST_NOSTR_PRIVKEY
+
+          let user
+
+          if (isTest && testPrivkey) {
+            // Use test key for Playwright or test environment
+            user = ndk.getUser({ privateKey: testPrivkey })
+            console.log('[Test Mode] Logged in using test private key')
+          } else {
+            user = await ndk.signer?.user()
+          }
 
           if (user) {
             set({ user, isLoggedIn: true })

@@ -5,6 +5,7 @@ import Icon from '../Icon'
 
 export interface ZapoutButtonProps extends Omit<ButtonProps, 'isLink' | 'to'> {
   merchantPubkey: string
+  dataTestId?: string
 }
 
 const ZapoutButton: React.FC<ZapoutButtonProps> = ({
@@ -14,7 +15,7 @@ const ZapoutButton: React.FC<ZapoutButtonProps> = ({
   children = 'Zapout',
   rounded = true,
   merchantPubkey,
-
+  dataTestId,
   ...props
 }) => {
   return (
@@ -26,6 +27,7 @@ const ZapoutButton: React.FC<ZapoutButtonProps> = ({
       isLink={true}
       to={`/zapout/${merchantPubkey}`}
       rounded={rounded}
+      dataTestId={dataTestId}
     >
       <picture>
         <Icon.Zap />

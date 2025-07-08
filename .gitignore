@@ -25,3 +25,9 @@ dist-ssr
 *.sln
 *.sw?
 *.mdc
+
+#submodules
+external/
+
+#Test results
+*playwright-*

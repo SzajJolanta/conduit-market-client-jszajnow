@@ -54,6 +54,7 @@ const AddToCartButton = ({
       onClick={() => addItemToCart(product)}
       disabled={disabled}
       rounded={false}
+      dataTestId="add-to-cart-btn"
     >
       <Icon.ShoppingCart className="size-4" />
       Add to Cart

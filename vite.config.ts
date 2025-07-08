@@ -20,5 +20,11 @@ export default defineConfig({
       '@': resolve(__dirname, './src'),
       '@root': resolve(__dirname, '.')
     }
+  },
+  server: {
+    watch: {
+      // Ignore the entire src/tests directory and all its contents
+      ignored: ['**/src/tests/**']
+    }
   }
 })

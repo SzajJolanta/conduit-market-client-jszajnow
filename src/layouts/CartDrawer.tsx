@@ -238,13 +238,14 @@ const CartDrawer: React.FC = () => {
 
           {/* Actions */}
           <div className="grid gap-2 items-center content-center">
-            <Button variant="outline" rounded={false} isLink to="/carts">
+            <Button variant="outline" rounded={false} isLink to="/carts" dataTestId=''>
               <Icon.ShoppingBag />
               View Cart(s)
             </Button>
             <ZapoutButton
               rounded={false}
               merchantPubkey={selectedHUDCart?.merchantPubkey || ''}
+              dataTestId="zapp-out-btn"
             >
               Zap out
             </ZapoutButton>
